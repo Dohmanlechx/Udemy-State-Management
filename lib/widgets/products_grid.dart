@@ -4,10 +4,14 @@ import 'package:udemy_state_mng/providers/products_provider.dart';
 import 'package:udemy_state_mng/widgets/product_item.dart';
 
 class ProductsGrid extends StatelessWidget {
+  final bool showFavs;
+
+  const ProductsGrid(this.showFavs);
+
   @override
   Widget build(BuildContext context) {
     final productsData = Provider.of<ProductsProvider>(context);
-    final products = productsData.items;
+    final products = showFavs ? productsData.favoriteItems : productsData.items;
 
     return GridView.builder(
       padding: const EdgeInsets.all(10),
@@ -18,7 +22,10 @@ class ProductsGrid extends StatelessWidget {
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
       ),
-      itemBuilder: (ctx, i) => ProductItem(products[i]),
+      itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
+        value: products[i],
+        child: ProductItem(),
+      ),
     );
   }
 }
