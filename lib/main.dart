@@ -7,6 +7,7 @@ import 'package:udemy_state_mng/screens/cart_screen.dart';
 import 'package:udemy_state_mng/screens/orders_screen.dart';
 import 'package:udemy_state_mng/screens/product_detail_screen.dart';
 import 'package:udemy_state_mng/screens/products_overview_screen.dart';
+import 'package:udemy_state_mng/screens/user_products_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
           ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
           CartScreen.routeName: (ctx) => CartScreen(),
           OrdersScreen.routeName: (ctx) => OrdersScreen(),
+          UserProductsScreen.routeName: (ctx) => UserProductsScreen(),
         },
       ),
     );
