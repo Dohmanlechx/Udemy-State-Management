@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:udemy_state_mng/providers/product.dart';
 
 class ProductsProvider with ChangeNotifier {
@@ -61,15 +64,35 @@ class ProductsProvider with ChangeNotifier {
 //  }
 
   void addProduct(Product product) {
-    final newProduct = Product(
-      title: product.title,
-      description: product.description,
-      price: product.price,
-      imageUrl: product.imageUrl,
-      id: DateTime.now().toString(),
+    const url = "https://flutter-update-7daf6.firebaseio.com/products.json";
+
+    http
+        .post(
+      url,
+      body: json.encode(
+        {
+          "title": product.title,
+          "description": product.description,
+          "imageUrl": product.imageUrl,
+          "price": product.price,
+          "isFavorite": product.isFavorite,
+        },
+      ),
+    )
+        .then(
+      (response) {
+        print(json.decode(response.body));
+        final newProduct = Product(
+          title: product.title,
+          description: product.description,
+          price: product.price,
+          imageUrl: product.imageUrl,
+          id: DateTime.now().toString(),
+        );
+        _items.add(newProduct);
+        notifyListeners();
+      },
     );
-    _items.add(newProduct);
-    notifyListeners();
   }
 
   void updateProduct(String id, Product newProduct) {
@@ -78,5 +101,10 @@ class ProductsProvider with ChangeNotifier {
       _items[prodIndex] = newProduct;
       notifyListeners();
     }
+  }
+
+  void deleteProduct(String id) {
+    _items.removeWhere((prod) => prod.id == id);
+    notifyListeners();
   }
 }
