@@ -28,7 +28,7 @@ class ProductItem extends StatelessWidget {
               );
             },
             child: Image.network(
-              product.imageUrl,
+              "https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/other/cat_relaxing_on_patio_other/1800x1200_cat_relaxing_on_patio_other.jpg"/*product.imageUrl*/,
               fit: BoxFit.cover,
             ),
           ),
