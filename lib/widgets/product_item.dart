@@ -29,9 +29,15 @@ class ProductItem extends StatelessWidget {
                 arguments: product.id,
               );
             },
-            child: Image.network(
-              "https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/other/cat_relaxing_on_patio_other/1800x1200_cat_relaxing_on_patio_other.jpg"/*product.imageUrl*/,
-              fit: BoxFit.cover,
+            child: Hero(
+              tag: product.id,
+              child: FadeInImage(
+                placeholder: AssetImage('assets/images/placeholder.png'),
+                image: NetworkImage(
+                  "https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/other/cat_relaxing_on_patio_other/1800x1200_cat_relaxing_on_patio_other.jpg" /*product.imageUrl*/,
+                ),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
         ),
@@ -60,9 +66,12 @@ class ProductItem extends StatelessWidget {
               Scaffold.of(context).showSnackBar(SnackBar(
                 content: Text("Added item to cart!"),
                 duration: const Duration(seconds: 2),
-                action: SnackBarAction(label: "UNDO", onPressed: () {
-                  cart.removeSingleItem(product.id);
-                },),
+                action: SnackBarAction(
+                  label: "UNDO",
+                  onPressed: () {
+                    cart.removeSingleItem(product.id);
+                  },
+                ),
               ));
             },
             color: Theme.of(context).accentColor,

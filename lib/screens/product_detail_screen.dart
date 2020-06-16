@@ -15,37 +15,50 @@ class ProductDetailScreen extends StatelessWidget {
     ).findById(productId);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(loadedProduct.title),
-      ),
-      body: Column(
-        children: <Widget>[
-          Container(
-            width: double.infinity,
-            height: 300,
-            child: Image.network(
-              loadedProduct.imageUrl,
-              fit: BoxFit.cover,
+//      appBar: AppBar(
+//        title: Text(loadedProduct.title),
+//      ),
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverAppBar(
+            expandedHeight: 300,
+            pinned: true,
+            flexibleSpace: FlexibleSpaceBar(
+              title: Text(loadedProduct.title),
+              background: Hero(
+                tag: loadedProduct.id,
+                child: Image.network(
+                  "https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/other/cat_relaxing_on_patio_other/1800x1200_cat_relaxing_on_patio_other.jpg" /*loadedProduct.imageUrl*/,
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
           ),
-          SizedBox(height: 10),
-          Text(
-            "\$${loadedProduct.price}",
-            style: TextStyle(
-              color: Colors.grey,
-              fontSize: 20,
-            ),
+          SliverList(
+            delegate: SliverChildListDelegate([
+              SizedBox(height: 10),
+              Text(
+                "\$${loadedProduct.price}",
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 20,
+                ),
+              ),
+              SizedBox(height: 10),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                width: double.infinity,
+                child: Text(
+                  loadedProduct.description,
+                  textAlign: TextAlign.center,
+                  softWrap: true,
+                ),
+              ),
+              SizedBox(
+                height: 1500,
+              ),
+            ]),
           ),
-          SizedBox(height: 10),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            width: double.infinity,
-            child: Text(
-              loadedProduct.description,
-              textAlign: TextAlign.center,
-              softWrap: true,
-            ),
-          )
         ],
       ),
     );
